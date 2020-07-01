@@ -1,0 +1,57 @@
+apply from: rootProject.file('gradle/helper.gradle')
+
+ext.Configurations = [
+        VERSION_CODE        : 1,
+        VERSION_NAME        : '1.0.0',
+        MIN_SDK             : 21,
+        TARGET_SDK          : 29,
+        COMPILE_SDK         : 29,
+        BUILD_TOOLS         : '30.0.0'
+]
+
+ext.Versions = [
+        ANDROID             : '4.0.0',
+        APPCOMPAT           : '1.1.0',
+        AUTO_SERVICE        : '1.0-rc7',
+        CONSTRAINT_LAYOUT   : '1.1.3',
+        CORE                : '1.3.0',
+        KOTLIN              : '1.3.72',
+        KOTLIN_POET         : '1.6.0',
+        LIVEDATA            : '2.2.0',
+        MATERIAL            : '1.1.0',
+        MOSHI               : '1.9.3'
+]
+
+ext.GradlePlugins = [
+        ANDROID     : "com.android.tools.build:gradle:$Versions.ANDROID",
+        KOTLIN      : "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.KOTLIN"
+]
+
+ext.Libraries = [
+        APPCOMPAT           : "androidx.appcompat:appcompat:$Versions.APPCOMPAT",
+        AUTO_SERVICE        : "com.google.auto.service:auto-service:$Versions.AUTO_SERVICE",
+        CONSTRAINT_LAYOUT   : "androidx.constraintlayout:constraintlayout:$Versions.CONSTRAINT_LAYOUT",
+        CORE                : "androidx.core:core-ktx:$Versions.CORE",
+        KOTLIN              : "org.jetbrains.kotlin:kotlin-stdlib:$Versions.KOTLIN",
+        KOTLIN_POET         : "com.squareup:kotlinpoet:$Versions.KOTLIN_POET",
+        LIVEDATA            : "androidx.lifecycle:lifecycle-livedata-ktx:$Versions.LIVEDATA",
+        MATERIAL            : "com.google.android.material:material:$Versions.MATERIAL",
+        MOSHI               : "com.squareup.moshi:moshi:$Versions.MOSHI",
+        MOSHI_CODEGEN       : "com.squareup.moshi:moshi-kotlin-codegen:$Versions.MOSHI"
+]
+
+if (isPublishMode()) {
+    ext.Modules = [
+            ANNOTATION      : "com.zulu.android:annotation:$Configurations.VERSION_NAME",
+            FRAMEWORK       : "com.zulu.android:framework:$Configurations.VERSION_NAME",
+            PLUGIN_MOSHI    : "com.zulu.android:plugin-moshi:$Configurations.VERSION_NAME",
+            PROCESSOR       : "com.zulu.android:processor:$Configurations.VERSION_NAME"
+    ]
+} else {
+    ext.Modules = [
+            ANNOTATION      : project(':lib:annotation'),
+            FRAMEWORK       : project(':lib:framework'),
+            PLUGIN_MOSHI    : project(':lib:plugin:moshi'),
+            PROCESSOR       : project(':lib:processor')
+    ]
+}

@@ -1,0 +1,37 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    apply from: rootProject.file('gradle/dependencies.gradle')
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath GradlePlugins.ANDROID
+        classpath GradlePlugins.KOTLIN
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+        maven {
+            name = 'GitHubPackages'
+            url = uri("https://maven.pkg.github.com/$GITHUB_PACKAGES_OWNER/$GITHUB_PACKAGES_REPOSITORY")
+            credentials {
+                username = getEnvironmentVariable('GITHUB_PACKAGES_USERNAME')
+                password = getEnvironmentVariable('GITHUB_PACKAGES_TOKEN')
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

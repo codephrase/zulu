@@ -1,0 +1,36 @@
+apply from: rootProject.file('gradle/app.gradle')
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    defaultConfig {
+        applicationId "com.zulu.android.sample"
+    }
+
+    // To inline the bytecode built with JVM target 1.8 into
+    // bytecode that is being built with JVM target 1.6. (e.g. navArgs)
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation Libraries.APPCOMPAT
+    implementation Libraries.CONSTRAINT_LAYOUT
+    implementation Libraries.CORE
+    implementation Libraries.KOTLIN
+    implementation Libraries.MATERIAL
+
+    implementation Libraries.MOSHI
+    kapt Libraries.MOSHI_CODEGEN
+
+    implementation Modules.FRAMEWORK
+    implementation Modules.PLUGIN_MOSHI
+    kapt Modules.PROCESSOR
+}

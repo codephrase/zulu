@@ -1,0 +1,5 @@
+include ':sample'
+include ':lib:annotation'
+include ':lib:framework'
+include ':lib:plugin:moshi'
+include ':lib:processor'

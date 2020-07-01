@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply from: rootProject.file('gradle/github-mvn-push.gradle')
+
+android {
+    compileSdkVersion Configurations.COMPILE_SDK
+    buildToolsVersion Configurations.BUILD_TOOLS
+
+    defaultConfig {
+        versionCode Configurations.VERSION_CODE
+        versionName Configurations.VERSION_NAME
+        minSdkVersion Configurations.MIN_SDK
+        targetSdkVersion Configurations.TARGET_SDK
+    }
+
+    buildTypes {
+        release {
+            consumerProguardFiles 'consumer-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+}
+
+tasks.withType(PublishToMavenRepository) { task ->
+    dependsOn('assembleRelease')
+}
