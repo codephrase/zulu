@@ -1,0 +1,20 @@
+Properties localProperties = new Properties()
+
+def localPropertiesFile = project.rootProject.file('local.properties')
+if (localPropertiesFile.exists())
+    localProperties.load(localPropertiesFile.newDataInputStream())
+
+ext.isServerEnvironment = {
+    return project.hasProperty('environment') && environment == 'server'
+}
+
+ext.isPublishMode = {
+    return project.hasProperty('mode') && mode == 'publish'
+}
+
+ext.getEnvironmentVariable = { String key ->
+    if (isServerEnvironment())
+        return System.getenv(key)
+    else
+        return localProperties.getProperty(key)
+}

@@ -1,0 +1,12 @@
+apply from: rootProject.file('gradle/general-lib.gradle')
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation Libraries.KOTLIN
+    implementation Libraries.KOTLIN_POET
+
+    implementation Libraries.AUTO_SERVICE
+    kapt Libraries.AUTO_SERVICE
+
+    implementation Modules.ANNOTATION
+}

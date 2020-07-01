@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion Configurations.COMPILE_SDK
+    buildToolsVersion Configurations.BUILD_TOOLS
+
+    defaultConfig {
+        versionCode Configurations.VERSION_CODE
+        versionName Configurations.VERSION_NAME
+        minSdkVersion Configurations.MIN_SDK
+        targetSdkVersion Configurations.TARGET_SDK
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("$rootDir/${getEnvironmentVariable('STORE_PATH')}")
+            storePassword getEnvironmentVariable('STORE_PASSWORD')
+            keyAlias getEnvironmentVariable('KEY_ALIAS')
+            keyPassword getEnvironmentVariable('KEY_PASSWORD')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+}

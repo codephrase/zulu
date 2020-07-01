@@ -1,0 +1,5 @@
+apply from: rootProject.file('gradle/general-lib.gradle')
+
+dependencies {
+    implementation Libraries.KOTLIN
+}

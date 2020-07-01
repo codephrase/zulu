@@ -1,0 +1,9 @@
+apply from: rootProject.file('gradle/android-lib.gradle')
+
+dependencies {
+    implementation Libraries.APPCOMPAT
+    implementation Libraries.KOTLIN
+    implementation Libraries.LIVEDATA
+
+    api Modules.ANNOTATION
+}
