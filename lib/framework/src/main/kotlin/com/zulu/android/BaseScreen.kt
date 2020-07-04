@@ -4,11 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 
 abstract class BaseScreen(
     screenContext: ScreenContext
 ) : NavigationHandler {
     val context: Context = screenContext.context
+    val lifecycleOwner: LifecycleOwner = screenContext.lifecycleOwner
     val id: String = screenContext.id
     val store: Store = screenContext.store
 
@@ -46,6 +50,22 @@ abstract class BaseScreen(
     }
 
     open fun onResultReceived(result: Any?) {
+
+    }
+
+    fun requestPermissions(
+        permissions: List<String>,
+        requestCode: Int
+    ) {
+        val fragment = lifecycleOwner as? Fragment
+        fragment?.requestPermissions(permissions.toTypedArray(), requestCode)
+    }
+
+    open fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: List<String>,
+        grantResults: List<Int>
+    ) {
 
     }
 }

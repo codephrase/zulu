@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.zulu.android.BaseScreen
 import com.zulu.android.ScreenContext
@@ -42,7 +41,7 @@ class SecondScreen(
         super.onViewCreated(view)
 
         val textViewSecond = view.findViewById<TextView>(R.id.text_view_second)
-        state.person.observe(context as LifecycleOwner, Observer {
+        state.person.observe(lifecycleOwner, Observer {
             val person = state.person.value
             textViewSecond.text = "${person?.firstName} ${person?.lastName}"
         })

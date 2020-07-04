@@ -9,6 +9,9 @@ class DefaultStateHandler : StateHandler {
 
     private val moshi = Moshi.Builder()
         .add(StoreJsonAdapter.Factory())
+        .also {
+            JsonAdapterManager.applyTo(it)
+        }
         .build()
 
     override fun initialize(context: Context, restore: Boolean) {

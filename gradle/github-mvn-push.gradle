@@ -7,6 +7,37 @@ publishing {
             artifactId POM_ARTIFACT_ID
             version Configurations.VERSION_NAME
 
+            if (POM_PACKAGING == 'aar')
+                artifact "$buildDir/outputs/aar/${project.getName()}-release.aar"
+            else
+                artifact "$buildDir/libs/${project.getName()}.jar"
+
+            pom.name = POM_NAME
+            pom.packaging = POM_PACKAGING
+            pom.description = POM_DESCRIPTION
+            pom.url = POM_URL
+
+            pom.scm {
+                url = POM_SCM_URL
+                connection = POM_SCM_CONNECTION
+                developerConnection = POM_SCM_DEV_CONNECTION
+            }
+
+            pom.licenses {
+                license {
+                    name = POM_LICENSE_NAME
+                    url = POM_LICENSE_URL
+                    distribution = POM_LICENSE_DISTRIBUTION
+                }
+            }
+
+            pom.developers {
+                developer {
+                    id = POM_DEVELOPER_ID
+                    name = POM_DEVELOPER_NAME
+                }
+            }
+
             pom.withXml {
                 final dependenciesNode = asNode().appendNode('dependencies')
 
