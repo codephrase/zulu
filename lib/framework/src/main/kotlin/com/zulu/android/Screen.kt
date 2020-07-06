@@ -4,17 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 
-abstract class BaseScreen(
+abstract class Screen(
     screenContext: ScreenContext
 ) : NavigationHandler {
     val context: Context = screenContext.context
     val lifecycleOwner: LifecycleOwner = screenContext.lifecycleOwner
     val id: String = screenContext.id
-    val store: Store = screenContext.store
 
     override val navigationManager: NavigationManager
         get() {
@@ -26,8 +24,8 @@ abstract class BaseScreen(
             throw NullPointerException()
         }
 
-    open fun onCreateState(): Any? {
-        return null
+    open fun onCreateState(previousState: State?): State? {
+        return previousState
     }
 
     open fun onNavigated(params: Any?) {
@@ -42,6 +40,10 @@ abstract class BaseScreen(
     }
 
     open fun onViewCreated(view: View) {
+
+    }
+
+    open fun onStateChanged(propertyName: String) {
 
     }
 

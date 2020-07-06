@@ -1,16 +1,19 @@
 package com.zulu.android.sample.screen.first
 
-import com.zulu.android.BaseState
-import com.zulu.android.Store
+import com.squareup.moshi.JsonClass
+import com.zulu.android.State
 
-class FirstState constructor(
-    store: Store
-) : BaseState(store) {
-    var name: String
-        get() = store.get("name") ?: ""
-        set(value) = store.set("name", value)
+@JsonClass(generateAdapter = true)
+class FirstState : State() {
+    var name: String = ""
+        set(value) {
+            field = value
+            notifyPropertyChanged("name")
+        }
 
-    var age: Int
-        get() = store.get("age") ?: 0
-        set(value) = store.set("age", value)
+    var age: Int = 0
+        set(value) {
+            field = value
+            notifyPropertyChanged("age")
+        }
 }

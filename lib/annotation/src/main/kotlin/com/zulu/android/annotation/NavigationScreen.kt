@@ -3,6 +3,6 @@ package com.zulu.android.annotation
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class Screen(
+annotation class NavigationScreen(
     val name: String
 )

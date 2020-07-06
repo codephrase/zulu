@@ -7,6 +7,5 @@ class ScreenContext(
     val context: Context,
     val lifecycleOwner: LifecycleOwner,
     val id: String,
-    val name: String,
-    val store: Store
+    val name: String
 )

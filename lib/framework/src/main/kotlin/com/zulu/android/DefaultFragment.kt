@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 
 open class DefaultFragment : Fragment(), NavigationHandler {
     private lateinit var screenId: String
-    private lateinit var screen: BaseScreen
+    private lateinit var screen: Screen
+    private var state: State? = null
 
     override val navigationManager: NavigationManager
         get() {
@@ -23,6 +24,12 @@ open class DefaultFragment : Fragment(), NavigationHandler {
     private val stateHandler: StateHandler
         get() = NavigationManager.resolveScreenStateHandler()
 
+    private val observer = object: Observer {
+        override fun onChanged(propertyName: String) {
+            screen.onStateChanged(propertyName)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,16 +41,16 @@ open class DefaultFragment : Fragment(), NavigationHandler {
             screenId = data.id
 
             val shouldRestore = stateHandler.contains(screenId)
-            val store =
+            val previousState =
                 if (shouldRestore)
-                    stateHandler.restore(screenId) as Store
+                    stateHandler.restore(screenId) as? State
                 else
-                    Store()
+                    null
 
-            val screenContext = ScreenContext(requireContext(), this, data.id, data.name, store)
+            val screenContext = ScreenContext(requireContext(), this, data.id, data.name)
 
             screen = NavigationManager.resolveScreen(screenContext)
-            screen.onCreateState()
+            state = screen.onCreateState(previousState)
 
             if (!shouldRestore)
                 screen.onNavigated(data.params)
@@ -57,6 +64,7 @@ open class DefaultFragment : Fragment(), NavigationHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        state?.observe(observer)
         screen.onViewCreated(view)
 
         if (navigationManager.shouldHandleScreenResult())
@@ -66,12 +74,13 @@ open class DefaultFragment : Fragment(), NavigationHandler {
     override fun onStop() {
         super.onStop()
 
-        stateHandler.save(screenId, screen.store)
+        stateHandler.save(screenId, state)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
+        state?.removeObserver(observer)
         screen.onDestroyView()
     }
 
