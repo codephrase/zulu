@@ -8,7 +8,6 @@ class DefaultStateHandler : StateHandler {
     private lateinit var sharedPreferences: SharedPreferences
 
     private val moshi = Moshi.Builder()
-        .add(StoreJsonAdapter.Factory())
         .also {
             JsonAdapterManager.applyTo(it)
         }

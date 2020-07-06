@@ -36,7 +36,7 @@ class ScreenFactorySpec private constructor(
         return FunSpec.builder("create")
             .addModifiers(KModifier.OVERRIDE)
             .addParameter("context", ClassName(FRAMEWORK_PACKAGE_NAME, "ScreenContext"))
-            .returns(ClassName(FRAMEWORK_PACKAGE_NAME, "BaseScreen"))
+            .returns(ClassName(FRAMEWORK_PACKAGE_NAME, "Screen"))
             .addStatement("return %T(context)", ClassName(data.packageName, data.className))
             .build()
     }

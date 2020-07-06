@@ -278,7 +278,7 @@ class NavigationManager constructor(
             registerScreen(T::class)
         }
 
-        fun resolveScreen(screenContext: ScreenContext): BaseScreen {
+        fun resolveScreen(screenContext: ScreenContext): Screen {
             screenFactories[screenContext.name]?.let {
                 return it.create(screenContext)
             }

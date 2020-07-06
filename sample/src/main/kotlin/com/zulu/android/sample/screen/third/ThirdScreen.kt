@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.zulu.android.BaseScreen
+import com.zulu.android.Screen
 import com.zulu.android.ScreenContext
-import com.zulu.android.annotation.Screen
+import com.zulu.android.annotation.NavigationScreen
 import com.zulu.android.sample.R
 import com.zulu.android.sample.constant.NavigationConstant
 
-@Screen(NavigationConstant.THIRD)
+@NavigationScreen(NavigationConstant.THIRD)
 class ThirdScreen(
     context: ScreenContext
-) : BaseScreen(context) {
+) : Screen(context) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?

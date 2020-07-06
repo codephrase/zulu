@@ -1,7 +1,7 @@
 package com.zulu.android.processor
 
 import com.google.auto.service.AutoService
-import com.zulu.android.annotation.Screen
+import com.zulu.android.annotation.NavigationScreen
 import com.zulu.android.processor.base.BaseProcessor
 import com.zulu.android.processor.base.KAPT_KOTLIN_GENERATED_OPTION_NAME
 import com.zulu.android.processor.datamodel.ScreenData
@@ -20,11 +20,11 @@ import javax.lang.model.element.TypeElement
 @AutoService(Processor::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions(KAPT_KOTLIN_GENERATED_OPTION_NAME)
-class ScreenProcessor : BaseProcessor() {
+class NavigationScreenProcessor : BaseProcessor() {
     private val screens = mutableListOf<ScreenData>()
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
-        return mutableSetOf(Screen::class.java.name)
+        return mutableSetOf(NavigationScreen::class.java.name)
     }
 
     override fun process(
@@ -35,9 +35,9 @@ class ScreenProcessor : BaseProcessor() {
         val kotlinGeneratedFile = File(kotlinGeneratedDir)
 
         if (!roundEnvironment.processingOver()) {
-            roundEnvironment.getElementsAnnotatedWith(Screen::class.java)
+            roundEnvironment.getElementsAnnotatedWith(NavigationScreen::class.java)
                 .forEach {
-                    val annotation = it.getAnnotation(Screen::class.java)
+                    val annotation = it.getAnnotation(NavigationScreen::class.java)
 
                     val packageName = processingEnv.elementUtils.getPackageOf(it).toString()
                     val className = it.simpleName.toString()
