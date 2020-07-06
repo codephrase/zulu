@@ -2,7 +2,7 @@ apply from: rootProject.file('gradle/helper.gradle')
 
 ext.Configurations = [
         VERSION_CODE        : 1,
-        VERSION_NAME        : '1.0.0',
+        VERSION_NAME        : '1.0.0-alpha-6',
         MIN_SDK             : 21,
         TARGET_SDK          : 29,
         COMPILE_SDK         : 29,
@@ -23,8 +23,8 @@ ext.Versions = [
 ]
 
 ext.GradlePlugins = [
-        ANDROID     : "com.android.tools.build:gradle:$Versions.ANDROID",
-        KOTLIN      : "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.KOTLIN"
+        ANDROID             : "com.android.tools.build:gradle:$Versions.ANDROID",
+        KOTLIN              : "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.KOTLIN"
 ]
 
 ext.Libraries = [

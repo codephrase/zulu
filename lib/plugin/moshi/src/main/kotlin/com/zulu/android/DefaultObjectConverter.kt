@@ -4,7 +4,10 @@ import android.os.Bundle
 import com.squareup.moshi.Moshi
 
 class DefaultObjectConverter : ObjectConverter {
-    private val moshi = Moshi.Builder().build()
+    private val moshi = Moshi.Builder()
+        .also {
+            JsonAdapterManager.applyTo(it)
+        }.build()
 
     override fun fromBundle(bundle: Bundle?): Any? {
         bundle?.let {

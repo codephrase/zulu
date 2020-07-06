@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import com.zulu.android.NavigationHandler
 import com.zulu.android.NavigationManager
+import com.zulu.android.sample.constant.NavigationConstant
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationHandler {
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationHandler {
         @IdRes get() = R.id.container
 
     private val initialScreenName: String
-        get() = "First"
+        get() = NavigationConstant.FIRST
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

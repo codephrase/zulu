@@ -40,7 +40,7 @@ open class DefaultFragment : Fragment(), NavigationHandler {
                 else
                     Store()
 
-            val screenContext = ScreenContext(requireContext(), data.id, data.name, store)
+            val screenContext = ScreenContext(requireContext(), this, data.id, data.name, store)
 
             screen = NavigationManager.resolveScreen(screenContext)
             screen.onCreateState()
@@ -73,5 +73,23 @@ open class DefaultFragment : Fragment(), NavigationHandler {
         super.onDestroyView()
 
         screen.onDestroyView()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+
+        screen.onRequestPermissionsResult(
+            requestCode,
+            permissions.toList(),
+            grantResults.toList()
+        )
     }
 }
