@@ -51,9 +51,17 @@ class NavigationManager constructor(
     }
 
     fun onBackPressed(): Boolean {
-        if (navigationStack.size > 1) {
-            goBack()
+        val currentNavigationState = navigationStack.last()
+        val currentFragment = fragmentManager.findFragmentByTag(currentNavigationState.id)
+            ?: throw Exception("Invalid navigation state")
+
+        if (currentFragment is DefaultFragment && currentFragment.onBackPressed()) {
             return true
+        } else {
+            if (navigationStack.size > 1) {
+                goBack()
+                return true
+            }
         }
 
         return false
@@ -282,15 +290,6 @@ class NavigationManager constructor(
             screenFactories[screenContext.name]?.let {
                 return it.create(screenContext)
             }
-
-            /*screens[screenContext.name]?.let {
-                val constructor =
-                    it.constructors.firstOrNull {
-                        it.parameters.size == 1 && it.parameters[0].type == ScreenContext::class.createType()
-                    } ?: throw Exception("Screen cannot be initialized: ${it.simpleName}")
-
-                return constructor.call(screenContext)
-            }*/
 
             throw NullPointerException()
         }

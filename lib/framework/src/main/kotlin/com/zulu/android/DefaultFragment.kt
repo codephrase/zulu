@@ -24,7 +24,7 @@ open class DefaultFragment : Fragment(), NavigationHandler {
     private val stateHandler: StateHandler
         get() = NavigationManager.resolveScreenStateHandler()
 
-    private val observer = object: Observer {
+    private val observer = object : Observer {
         override fun onChanged(propertyName: String) {
             screen.onStateChanged(propertyName)
         }
@@ -100,5 +100,9 @@ open class DefaultFragment : Fragment(), NavigationHandler {
             permissions.toList(),
             grantResults.toList()
         )
+    }
+
+    fun onBackPressed(): Boolean {
+        return screen.onBackPressed()
     }
 }
