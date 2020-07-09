@@ -55,6 +55,10 @@ abstract class Screen(
 
     }
 
+    open fun onBackPressed(): Boolean {
+        return false
+    }
+
     fun requestPermissions(
         permissions: List<String>,
         requestCode: Int
