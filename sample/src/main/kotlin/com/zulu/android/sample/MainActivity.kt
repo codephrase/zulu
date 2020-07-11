@@ -56,4 +56,9 @@ class MainActivity : AppCompatActivity(), NavigationHandler {
         if (!navigationManager.onBackPressed())
             super.onBackPressed()
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }

@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.zulu.android.Screen
-import com.zulu.android.State
 import com.zulu.android.ScreenContext
+import com.zulu.android.State
 import com.zulu.android.annotation.NavigationScreen
 import com.zulu.android.sample.R
 import com.zulu.android.sample.constant.NavigationConstant
@@ -32,6 +32,8 @@ class SecondScreen(
         super.onNavigated(params)
 
         state.person = params as Person
+
+        setTitle("Second Screen")
     }
 
     override fun onCreateView(
