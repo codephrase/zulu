@@ -232,6 +232,10 @@ class NavigationManager constructor(
         return stateHandler.restore(SCREEN_RESULT)
     }
 
+    internal fun canGoBack(): Boolean {
+        return navigationStack.size > 1
+    }
+
     companion object {
         private const val NAVIGATION_STACK = "navigation-stack"
         private const val SCREEN_RESULT = "screen-result"

@@ -14,6 +14,13 @@ import com.zulu.android.sample.constant.NavigationConstant
 class ThirdScreen(
     context: ScreenContext
 ) : Screen(context) {
+    override fun onNavigated(params: Any?) {
+        super.onNavigated(params)
+
+        setTitle("Third Screen")
+        setSubtitle("This is the last page")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?

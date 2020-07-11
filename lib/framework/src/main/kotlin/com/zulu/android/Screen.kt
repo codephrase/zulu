@@ -74,4 +74,19 @@ abstract class Screen(
     ) {
 
     }
+
+    fun setUpButtonEnabled(upButtonEnabled: Boolean) {
+        val fragment = lifecycleOwner as? DefaultFragment
+        fragment?.setUpButtonEnabled(upButtonEnabled)
+    }
+
+    fun setTitle(title: String) {
+        val fragment = lifecycleOwner as? DefaultFragment
+        fragment?.setTitle(title)
+    }
+
+    fun setSubtitle(subtitle: String) {
+        val fragment = lifecycleOwner as? DefaultFragment
+        fragment?.setSubtitle(subtitle)
+    }
 }
