@@ -2,9 +2,7 @@ package com.zulu.android
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
@@ -75,17 +73,12 @@ open class DefaultFragment : Fragment(), NavigationHandler {
             val view = screen.onCreateView(inflater, container)
 
             initToolbar()
+            setHasOptionsMenu(screen.menuId != 0)
 
             return view
         }
 
         return null
-    }
-
-    private fun initToolbar() {
-        invalidateUpButtonEnabled()
-        invalidateTitle()
-        invalidateSubtitle()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,6 +90,17 @@ open class DefaultFragment : Fragment(), NavigationHandler {
 
         if (navigationManager.shouldHandleScreenResult())
             screen.onResultReceived(navigationManager.getScreenResult())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        if (screen.menuId != 0)
+            inflater.inflate(screen.menuId, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return screen.onOptionsItemSelected(item)
     }
 
     override fun onStop() {
@@ -142,6 +146,12 @@ open class DefaultFragment : Fragment(), NavigationHandler {
             "title" -> invalidateTitle()
             "subtitle" -> invalidateSubtitle()
         }
+    }
+
+    private fun initToolbar() {
+        invalidateUpButtonEnabled()
+        invalidateTitle()
+        invalidateSubtitle()
     }
 
     private fun invalidateUpButtonEnabled() {
