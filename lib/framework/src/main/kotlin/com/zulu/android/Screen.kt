@@ -1,9 +1,8 @@
 package com.zulu.android
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 
@@ -24,6 +23,9 @@ abstract class Screen(
             throw NullPointerException()
         }
 
+    open val menuId: Int
+        @MenuRes get() = 0
+
     open fun onCreateState(previousState: State?): State? {
         return previousState
     }
@@ -41,6 +43,10 @@ abstract class Screen(
 
     open fun onViewCreated(view: View) {
 
+    }
+
+    open fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return false
     }
 
     open fun onStateChanged(propertyName: String) {
