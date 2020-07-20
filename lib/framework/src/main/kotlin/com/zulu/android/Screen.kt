@@ -1,17 +1,27 @@
 package com.zulu.android
 
 import android.content.Context
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.MenuRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 abstract class Screen(
     screenContext: ScreenContext
-) : NavigationHandler {
+) : CoroutineScope, NavigationHandler {
     val context: Context = screenContext.context
     val lifecycleOwner: LifecycleOwner = screenContext.lifecycleOwner
     val id: String = screenContext.id
+
+    private val job: Job = SupervisorJob()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     override val navigationManager: NavigationManager
         get() {
@@ -54,7 +64,7 @@ abstract class Screen(
     }
 
     open fun onDestroyView() {
-
+        coroutineContext.cancelChildren()
     }
 
     open fun onResultReceived(result: Any?) {

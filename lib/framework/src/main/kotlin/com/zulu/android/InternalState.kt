@@ -1,6 +1,6 @@
 package com.zulu.android
 
-class InternalState: State() {
+class InternalState : State() {
     var upButtonEnabled: Boolean? = null
         set(value) {
             field = value

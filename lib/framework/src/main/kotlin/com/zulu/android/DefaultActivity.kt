@@ -5,8 +5,15 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-abstract class DefaultActivity : AppCompatActivity(), NavigationHandler {
+abstract class DefaultActivity : AppCompatActivity(), CoroutineScope, NavigationHandler {
+    private val job: Job = SupervisorJob()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
     override val navigationManager: NavigationManager by lazy {
         NavigationManager(this, containerId, initialScreenName)
     }
@@ -39,6 +46,12 @@ abstract class DefaultActivity : AppCompatActivity(), NavigationHandler {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         navigationManager.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        coroutineContext.cancelChildren()
     }
 
     override fun onBackPressed() {

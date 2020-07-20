@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 open class DefaultFragment : Fragment(), NavigationHandler {
+    private lateinit var internalStateId: String
     private lateinit var screenId: String
     private lateinit var screen: Screen
     private var internalState: InternalState? = null
@@ -45,18 +46,19 @@ open class DefaultFragment : Fragment(), NavigationHandler {
         arguments?.let {
             val data = NavigationData(it)
 
+            internalStateId = "${data.id}-${INTERNAL}"
             screenId = data.id
 
-            val internalStateId = getInternalStateId(screenId)
+            val shouldRestore = stateHandler.contains(internalStateId)
+
             val previousInternalState =
-                if (stateHandler.contains(internalStateId))
+                if (shouldRestore)
                     stateHandler.restore(internalStateId) as? InternalState
                 else
                     null
 
-            val shouldRestore = stateHandler.contains(screenId)
             val previousState =
-                if (shouldRestore)
+                if (stateHandler.contains(screenId))
                     stateHandler.restore(screenId) as? State
                 else
                     null
@@ -106,7 +108,7 @@ open class DefaultFragment : Fragment(), NavigationHandler {
     override fun onStop() {
         super.onStop()
 
-        stateHandler.save(getInternalStateId(screenId), internalState)
+        stateHandler.save(internalStateId, internalState)
         stateHandler.save(screenId, state)
     }
 
@@ -156,7 +158,9 @@ open class DefaultFragment : Fragment(), NavigationHandler {
 
     private fun invalidateUpButtonEnabled() {
         val supportActionBar = (context as AppCompatActivity).supportActionBar
-        supportActionBar?.setDisplayHomeAsUpEnabled(internalState?.upButtonEnabled ?: navigationManager.canGoBack())
+        supportActionBar?.setDisplayHomeAsUpEnabled(
+            internalState?.upButtonEnabled ?: navigationManager.canGoBack()
+        )
     }
 
     private fun invalidateTitle() {
@@ -194,10 +198,6 @@ open class DefaultFragment : Fragment(), NavigationHandler {
 
     fun setSubtitle(subtitle: String) {
         internalState?.subtitle = subtitle
-    }
-
-    private fun getInternalStateId(screenId: String): String {
-        return "${screenId}-${INTERNAL}"
     }
 
     companion object {
