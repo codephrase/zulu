@@ -2,6 +2,8 @@ apply from: rootProject.file('gradle/android-lib.gradle')
 
 dependencies {
     implementation Libraries.APPCOMPAT
+    api Libraries.COROUTINES
+    implementation Libraries.COROUTINES_ANDROID
     implementation Libraries.KOTLIN
 
     api Modules.ANNOTATION

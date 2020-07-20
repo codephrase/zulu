@@ -9,7 +9,8 @@ import java.lang.reflect.Type
 class InternalStateJsonAdapter(
     moshi: Moshi
 ) : JsonAdapter<InternalState>() {
-    private val options: JsonReader.Options = JsonReader.Options.of("upButtonEnabled", "title", "subtitle")
+    private val options: JsonReader.Options =
+        JsonReader.Options.of("upButtonEnabled", "title", "subtitle")
 
     private val nullableBooleanAdapter: JsonAdapter<Boolean?> =
         moshi.adapter(Boolean::class.javaObjectType, emptySet(), "upButtonEnabled")
@@ -80,6 +81,10 @@ class InternalStateJsonAdapter(
         }
 
         writer.endObject()
+    }
+
+    override fun toString(): String {
+        return "JsonAdapter(InternalState)"
     }
 
     class Factory : JsonAdapter.Factory {
