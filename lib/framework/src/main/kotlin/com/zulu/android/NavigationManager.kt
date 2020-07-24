@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 
 class NavigationManager constructor(
     private val activity: AppCompatActivity,
-    @IdRes private val containerId: Int,
+    @IdRes private val placeholderId: Int,
     private val initialScreenName: String
 ) {
     private val fragmentManager: FragmentManager
@@ -41,7 +41,7 @@ class NavigationManager constructor(
 
             fragmentManager
                 .beginTransaction()
-                .replace(containerId, fragment, data.id)
+                .replace(placeholderId, fragment, data.id)
                 .commit()
         }
     }
@@ -97,7 +97,7 @@ class NavigationManager constructor(
         fragmentManager
             .beginTransaction()
             .detach(currentFragment)
-            .replace(containerId, nextFragment, data.id)
+            .replace(placeholderId, nextFragment, data.id)
             .commit()
     }
 
@@ -120,7 +120,7 @@ class NavigationManager constructor(
         fragmentManager
             .beginTransaction()
             .remove(currentFragment)
-            .replace(containerId, nextFragment, data.id)
+            .replace(placeholderId, nextFragment, data.id)
             .commit()
     }
 
@@ -148,7 +148,7 @@ class NavigationManager constructor(
 
             navigationStack.add(nextNavigationState)
 
-            fragmentTransaction.replace(containerId, nextFragment, data.id)
+            fragmentTransaction.replace(placeholderId, nextFragment, data.id)
             fragmentTransaction.commit()
         } else {
             navigateDefault(screenName, params)
@@ -177,7 +177,7 @@ class NavigationManager constructor(
 
         navigationStack.add(nextNavigationState)
 
-        fragmentTransaction.replace(containerId, nextFragment, data.id)
+        fragmentTransaction.replace(placeholderId, nextFragment, data.id)
         fragmentTransaction.commit()
     }
 

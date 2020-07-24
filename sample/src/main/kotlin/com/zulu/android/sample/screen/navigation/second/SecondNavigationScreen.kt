@@ -1,10 +1,9 @@
-package com.zulu.android.sample.screen.second
+package com.zulu.android.sample.screen.navigation.second
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import com.zulu.android.Screen
 import com.zulu.android.ScreenContext
 import com.zulu.android.State
@@ -13,18 +12,22 @@ import com.zulu.android.sample.R
 import com.zulu.android.sample.constant.NavigationConstant
 import com.zulu.android.sample.datamodel.Person
 
-@NavigationScreen(NavigationConstant.SECOND)
-class SecondScreen(
+@NavigationScreen(NavigationConstant.SECOND_NAVIGATION)
+class SecondNavigationScreen(
     context: ScreenContext
 ) : Screen(context) {
-    private lateinit var state: SecondState
+    override val layoutId: Int
+        @LayoutRes get() = R.layout.screen_navigation_second
+
+    private lateinit var state: SecondNavigationState
 
     private lateinit var textViewSecond: TextView
     private lateinit var buttonNextSecond: Button
     private lateinit var buttonPreviousSecond: Button
 
     override fun onCreateState(previousState: State?): State? {
-        state = previousState as? SecondState ?: SecondState()
+        state = previousState as? SecondNavigationState
+            ?: SecondNavigationState()
         return state
     }
 
@@ -33,14 +36,7 @@ class SecondScreen(
 
         state.person = params as Person
 
-        setTitle("Second Screen")
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): View? {
-        return inflater.inflate(R.layout.screen_second, container, false)
+        setTitle(context.getString(R.string.title_second_navigation))
     }
 
     override fun onViewCreated(view: View) {
@@ -51,7 +47,7 @@ class SecondScreen(
 
         buttonNextSecond = view.findViewById(R.id.button_next_second)
         buttonNextSecond.setOnClickListener {
-            navigationManager.navigate(NavigationConstant.THIRD)
+            navigationManager.navigate(NavigationConstant.THIRD_NAVIGATION)
         }
 
         buttonPreviousSecond = view.findViewById(R.id.button_previous_second)

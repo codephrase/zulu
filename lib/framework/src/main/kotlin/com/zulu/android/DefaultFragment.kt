@@ -151,6 +151,20 @@ open class DefaultFragment : Fragment(), NavigationHandler {
     }
 
     private fun initToolbar() {
+        val toolbarLayoutId = when (screen.toolbarMode) {
+            ToolbarMode.DEFAULT -> R.layout.toolbar_default
+            ToolbarMode.COLLAPSING -> R.layout.toolbar_collapsing
+            ToolbarMode.NONE -> 0
+            ToolbarMode.CUSTOM -> screen.toolbarLayoutId
+        }
+
+        (context as DefaultActivity).initToolbar(
+            toolbarLayoutId,
+            screen.toolbarId,
+            screen.headerPlaceholderId,
+            screen.headerLayoutId
+        )
+
         invalidateUpButtonEnabled()
         invalidateTitle()
         invalidateSubtitle()
