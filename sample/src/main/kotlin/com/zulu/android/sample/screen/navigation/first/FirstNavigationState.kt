@@ -1,10 +1,10 @@
-package com.zulu.android.sample.screen.first
+package com.zulu.android.sample.screen.navigation.first
 
 import com.squareup.moshi.JsonClass
 import com.zulu.android.State
 
 @JsonClass(generateAdapter = true)
-class FirstState : State() {
+class FirstNavigationState : State() {
     var name: String = ""
         set(value) {
             field = value
